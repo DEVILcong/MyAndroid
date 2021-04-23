@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">webrtc_test1</string>
+    <string name="init_activity_text">梁月聪的webrtc测试程序</string>
+    <string name="title_activity_init">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="permissions">
+        <item>android.permission.CAMERA</item>
+        <item>android.permission.RECORD_AUDIO</item>
+        <item>android.permission.READ_EXTERNAL_STORAGE</item>
+    </string-array>
+
+    <string-array name="iceServers">
+        <item>stun:stun1.l.google.com:19302</item>
+        <item>stun:stun2.l.google.com:19302</item>
+        <item>stun:stun3.l.google.com:19302</item>
+        <item>stun:stun4.l.google.com:19302</item>
+    </string-array>
+
+    <string name="websocket_broadcast_id">com.liang.webrtc.websocket</string>
+    <string name="websocket_broadcast_msg_type_header">msg_type</string>
+    <string name="websocket_broadcast_msg_type_received">received</string>
+    <string name="websocket_broadcast_msg_type_send">send</string>
+    <string name="websocket_broadcast_msg_type_control">control</string>
+    <string name="websocket_broadcast_msg_type_error">error</string>
+    <string name="websocket_broadcast_msg_content_header">msg_content</string>
+    <integer name="websocket_broadcast_msg_content_control_close_ws">1</integer>
+    <integer name="websocket_broadcast_msg_content_control_stop_cast">2</integer>
+    <integer name="websocket_broadcast_msg_content_control_pause_cast">3</integer>
+    <integer name="websocket_broadcast_msg_content_control_resume_cast">4</integer>
+    <integer name="websocket_broadcast_msg_content_control_open_success">5</integer>
+    <integer name="websocket_broadcast_msg_content_control_close_ws_service">6</integer>
+    <integer name="websocket_broadcast_msg_content_control_ws_connect">7</integer>
+    <string name="websocket_broadcast_msg_content_ws_error_reason">error_reason</string>
+    <string name="websocket_broadcast_msg_content_addr_header">addr</string>
+    <string name="websocket_broadcast_msg_content_userid_header">userID</string>
+    <integer name="websocket_broadcast_msg_content_fixed_userid">2333</integer>
+
+    <string name="websocket_msg_type_header">msg_type</string>
+    <integer name="websocket_msg_type_handshake">1</integer>
+    <integer name="websocket_msg_type_normal">2</integer>
+    <integer name="websocket_msg_type_error">3</integer>
+    <string name="websocket_msg_client_id_header">client_id</string>
+    <string name="websocket_msg_client_type_header">client_type</string>
+    <integer name="websocket_msg_client_type_pc">1</integer>
+    <integer name="websocket_msg_client_type_phone">2</integer>
+    <string name="websocket_msg_content_type_header">content_type</string>
+    <integer name="websocket_msg_content_type_sdp">1</integer>
+    <integer name="websocket_msg_content_type_ice">2</integer>
+
+    <string name="websocket_error_connect">can\'t connect to websocket server</string>
+    <string name="websocket_error_close">server closed connection</string>
+
+
+    <string name="qrcode_msg_type_header">type</string>
+    <string name="qrcode_msg_userid_header">userId</string>
+    <string name="qrcode_msg_server_addr_header">serverAddress</string>
+
+    <string name="notification_channel_id_ws">websocket_channel_id</string>
+    <string name="notification_channel_name_ws">websocket_channel</string>
+    <string name="notification_channel_id_camera">camera_channel_id</string>
+    <string name="notification_channel_name_camera">camera_channel</string>
+    <string name="notification_channel_id_screen">screen_channel_id</string>
+    <string name="notification_channel_name_screen">screen_channel</string>
+    <integer name="notification_id_ws_close">2333</integer>
+    <integer name="notification_id_ws_error">2334</integer>
+    <integer name="notification_id_camera_service">2335</integer>
+    <integer name="notification_id_screen_service">2336</integer>
+
+    <string name="mainActivityActionName">myMainActivityAction</string>
+    <string name="mainActivityCategoryName">myMainActivityCategory</string>
+    <string name="camera1TrackID">track1</string>
+    <string name="camera2TrackID">track2</string>
+    <string name="screenTrackID">track3</string>
+    <string name="streamID">stream1</string>
+    <string name="websocketServerAddr">ws://192.168.0.106:23333</string>
+    <string name="screenCaptureDeviveName">screen</string>
+    <integer name="screenCaptureFPS">30</integer>
+    <integer name="webrtc_minBitrate">4000000</integer>
+    <integer name="webrtc_curBitrate">4000000</integer>
+    <integer name="webrtc_maxBitrate">8000000</integer>
+
+    <string name="start_button_running_text">Casting</string>
+</resources>
