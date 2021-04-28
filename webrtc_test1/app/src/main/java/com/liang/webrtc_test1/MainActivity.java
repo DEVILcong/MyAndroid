@@ -265,18 +265,12 @@ public class MainActivity
 
         @Override
         public void onCreateFailure(String s) {
-            new AlertDialog.Builder(currentActivity)
-                    .setTitle("ERROR")
-                    .setMessage("create sdp error " + s)
-                    .create().show();
+            createErrorDialog(s);
         }
 
         @Override
         public void onSetFailure(String s) {
-            new AlertDialog.Builder(currentActivity)
-                    .setTitle("ERROR")
-                    .setMessage("set sdp error " + s)
-                    .create().show();
+            createErrorDialog(s);
         }
     }
 
@@ -287,13 +281,13 @@ public class MainActivity
         setContentView(R.layout.activity_main);
 
         initData();
-        initWebRTCParts();
         initService();
-
         myBindService();
 
         listVideoCapture();
         beforeStartScreenCapture();
+
+        initWebRTCParts();
         startPeerConnection(); //in the end
     }
 
@@ -380,9 +374,9 @@ public class MainActivity
             configuration.enableDscp = false;
             configuration.sdpSemantics = PeerConnection.SdpSemantics.UNIFIED_PLAN;
             peerConnection = peerConnectionFactory.createPeerConnection(configuration, myPeerConnectionObserver);
-            peerConnection.setBitrate(getResources().getInteger(R.integer.webrtc_minBitrate),
-                    getResources().getInteger(R.integer.webrtc_curBitrate),
-                    getResources().getInteger(R.integer.webrtc_maxBitrate));
+//            peerConnection.setBitrate(getResources().getInteger(R.integer.webrtc_minBitrate),
+//                    getResources().getInteger(R.integer.webrtc_curBitrate),
+//                    getResources().getInteger(R.integer.webrtc_maxBitrate));
         }
 
         videoTransceier = peerConnection.addTransceiver(MediaStreamTrack.MediaType.MEDIA_TYPE_VIDEO);
@@ -588,15 +582,31 @@ public class MainActivity
             try {
                 if (msg_type.equals(getString(R.string.websocket_broadcast_msg_type_received))) {
                     JSONObject tmp_json_object = new JSONObject(intent.getStringExtra(getString(R.string.websocket_broadcast_msg_content_header)));
-                    int content_type = tmp_json_object.getInt(getString(R.string.websocket_msg_content_type_header));
-                    if(content_type == getResources().getInteger(R.integer.websocket_msg_content_type_sdp)){
-                        peerConnection.setRemoteDescription(new MySdpObserver(),
-                                new SessionDescription(SessionDescription.Type.fromCanonicalForm(tmp_json_object.getString("type")), tmp_json_object.getString("sdp")));
-                    }else if(content_type == getResources().getInteger(R.integer.websocket_msg_content_type_ice)){
-                        Log.i("my_msg", tmp_json_object.toString());
-                        peerConnection.addIceCandidate(new IceCandidate(tmp_json_object.getString("sdpMid"),
-                                tmp_json_object.getInt("sdpMLineIndex"),
-                                tmp_json_object.getString("candidate")));
+                    int content_msg_type = tmp_json_object.getInt(getString(R.string.websocket_msg_type_header));
+
+                    if (content_msg_type == getResources().getInteger(R.integer.websocket_msg_type_normal)) {
+                        int content_type = tmp_json_object.getInt(getString(R.string.websocket_msg_content_type_header));
+                        if (content_type == getResources().getInteger(R.integer.websocket_msg_content_type_sdp)) {
+                            peerConnection.setRemoteDescription(new MySdpObserver(),
+                                    new SessionDescription(SessionDescription.Type.fromCanonicalForm(tmp_json_object.getString("type")), tmp_json_object.getString("sdp")));
+                        } else if (content_type == getResources().getInteger(R.integer.websocket_msg_content_type_ice)) {
+                            Log.i("my_msg", tmp_json_object.toString());
+                            peerConnection.addIceCandidate(new IceCandidate(tmp_json_object.getString("sdpMid"),
+                                    tmp_json_object.getInt("sdpMLineIndex"),
+                                    tmp_json_object.getString("candidate")));
+                        }
+                    }else if(content_msg_type == getResources().getInteger(R.integer.websocket_msg_type_error)){
+                        new AlertDialog.Builder(currentActivity)
+                                .setTitle("ERROR")
+                                .setMessage("recv error message from server  " +
+                                        tmp_json_object.getString(getString(R.string.websocket_msg_extra_header)))
+                                .create().show();
+                    }
+                }else if(msg_type.equals(getString(R.string.websocket_broadcast_msg_type_control))){
+                    int action = intent.getIntExtra(getString(R.string.websocket_broadcast_msg_content_header), 0);
+                    if(action == getResources().getInteger(R.integer.websocket_broadcast_msg_content_control_stop_cast)){
+                        button0.setText("start");
+                        button0.setEnabled(true);
                     }
                 }
             }catch(Exception ex){
@@ -606,6 +616,13 @@ public class MainActivity
                         .create().show();
             }
         }
+    }
+
+    void createErrorDialog(String msg){
+        new AlertDialog.Builder(this)
+                .setTitle("ERROR")
+                .setMessage("msg")
+                .create().show();
     }
 
 }

@@ -7,10 +7,11 @@
     </string-array>
 
     <string-array name="iceServers">
-        <item>stun:stun1.l.google.com:19302</item>
-        <item>stun:stun2.l.google.com:19302</item>
-        <item>stun:stun3.l.google.com:19302</item>
-        <item>stun:stun4.l.google.com:19302</item>
+        <item>stun:www.liangyuecong666.club:3478</item>
+<!--        <item>stun:stun1.l.google.com:19302</item>-->
+<!--        <item>stun:stun2.l.google.com:19302</item>-->
+<!--        <item>stun:stun3.l.google.com:19302</item>-->
+<!--        <item>stun:stun4.l.google.com:19302</item>-->
     </string-array>
 
     <string name="websocket_broadcast_id">com.liang.webrtc.websocket</string>
@@ -43,6 +44,7 @@
     <string name="websocket_msg_content_type_header">content_type</string>
     <integer name="websocket_msg_content_type_sdp">1</integer>
     <integer name="websocket_msg_content_type_ice">2</integer>
+    <string name="websocket_msg_extra_header">extra</string>
 
     <string name="websocket_error_connect">can\'t connect to websocket server</string>
     <string name="websocket_error_close">server closed connection</string>

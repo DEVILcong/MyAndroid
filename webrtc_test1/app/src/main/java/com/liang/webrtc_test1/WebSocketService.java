@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -64,6 +65,11 @@ public class WebSocketService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String msg_type = intent.getStringExtra(getString(R.string.websocket_broadcast_msg_type_header));
+            if(msg_type == null){
+                Bundle tmp_bundle = intent.getExtras();
+                Log.i("my_info", tmp_bundle.toString());
+                return;
+            }
             if(msg_type.equals(getString(R.string.websocket_broadcast_msg_type_send))){
                 mWebSocketClient.send(intent.getStringExtra(getString(R.string.websocket_broadcast_msg_content_header)));
             }else if(msg_type.equals(getString(R.string.websocket_broadcast_msg_type_control))){

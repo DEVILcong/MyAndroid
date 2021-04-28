@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -31,8 +32,10 @@ public class ConnectActivity extends AppCompatActivity
     Context context = this;
     Activity this_activity = this;
     int scanRequestCode = 2333;
+    int userID;
     boolean isWebSocketServiceRunning = false;
     MyBroadcastReceiver myBroadcastReceiver;
+    Runnable runnableForStartActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,18 @@ public class ConnectActivity extends AppCompatActivity
         myBroadcastReceiver = new MyBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter(getString(R.string.websocket_broadcast_id));
         registerReceiver(myBroadcastReceiver, intentFilter);
+
+        runnableForStartActivity = new Runnable() {
+            @Override
+            public void run() {
+                Intent intent1 = new Intent(context, MainActivity.class);
+                intent1.putExtra(getString(R.string.websocket_broadcast_msg_content_userid_header),
+                        userID);
+                startActivity(intent1);
+                unregisterReceiver(myBroadcastReceiver);
+                this_activity.finish();
+            }
+        };
     }
 
     class MyBroadcastReceiver extends BroadcastReceiver{
@@ -71,10 +86,7 @@ public class ConnectActivity extends AppCompatActivity
             }else if(msg_type.equals(getString(R.string.websocket_broadcast_msg_type_control))){
                 if(intent.getIntExtra(getString(R.string.websocket_broadcast_msg_content_header), 0) ==
                 getResources().getInteger(R.integer.websocket_broadcast_msg_content_control_open_success)) {
-                    Intent intent1 = new Intent(context, MainActivity.class);
-                    startActivity(intent1);
-                    unregisterReceiver(myBroadcastReceiver);
-                    this_activity.finish();
+                    new Handler().postDelayed(runnableForStartActivity, 2000);
                 }
             }
         }
@@ -105,6 +117,10 @@ public class ConnectActivity extends AppCompatActivity
                     .setMessage("Connecting, please wait")
                     .create().show();
         }else if(id == R.id.btn_connect_by_qrcode){
+            new AlertDialog.Builder(this)
+                    .setTitle("Connecting")
+                    .setMessage("Connecting, please wait")
+                    .create().show();
             HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator()
                     .setHmsScanTypes(HmsScan.QRCODE_SCAN_TYPE).create();
             ScanUtil.startScan(this, scanRequestCode, options);
@@ -130,6 +146,7 @@ public class ConnectActivity extends AppCompatActivity
                                 jsonObject.getString(getString(R.string.qrcode_msg_server_addr_header)));
                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_userid_header),
                                 jsonObject.getInt(getString(R.string.qrcode_msg_userid_header)));
+                        userID = jsonObject.getInt(getString(R.string.qrcode_msg_userid_header));
                         startService(intent);
                         isWebSocketServiceRunning = true;
                     }else{
@@ -139,6 +156,7 @@ public class ConnectActivity extends AppCompatActivity
                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_header),
                                 getResources().getInteger(R.integer.websocket_broadcast_msg_content_control_ws_connect));
                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_userid_header), jsonObject.getInt(getString(R.string.qrcode_msg_userid_header)));
+                        userID = jsonObject.getInt(getString(R.string.qrcode_msg_userid_header));
                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_addr_header), jsonObject.getString(getString(R.string.qrcode_msg_server_addr_header)));
                         sendBroadcast(intent);
                     }
