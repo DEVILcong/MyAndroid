@@ -8,10 +8,10 @@
 
     <string-array name="iceServers">
         <item>stun:www.liangyuecong666.club:3478</item>
-<!--        <item>stun:stun1.l.google.com:19302</item>-->
-<!--        <item>stun:stun2.l.google.com:19302</item>-->
-<!--        <item>stun:stun3.l.google.com:19302</item>-->
-<!--        <item>stun:stun4.l.google.com:19302</item>-->
+        <item>stun:stun1.l.google.com:19302</item>
+        <item>stun:stun2.l.google.com:19302</item>
+        <item>stun:stun3.l.google.com:19302</item>
+        <item>stun:stun4.l.google.com:19302</item>
     </string-array>
 
     <string name="websocket_broadcast_id">com.liang.webrtc.websocket</string>
@@ -31,7 +31,7 @@
     <string name="websocket_broadcast_msg_content_ws_error_reason">error_reason</string>
     <string name="websocket_broadcast_msg_content_addr_header">addr</string>
     <string name="websocket_broadcast_msg_content_userid_header">userID</string>
-    <integer name="websocket_broadcast_msg_content_fixed_userid">2333</integer>
+    <integer name="websocket_broadcast_msg_content_fixed_userid">0</integer>
 
     <string name="websocket_msg_type_header">msg_type</string>
     <integer name="websocket_msg_type_handshake">1</integer>

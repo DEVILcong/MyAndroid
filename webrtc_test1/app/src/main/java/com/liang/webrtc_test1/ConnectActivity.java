@@ -155,7 +155,7 @@ public class ConnectActivity extends AppCompatActivity
                                 getString(R.string.websocket_broadcast_msg_type_control));
                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_header),
                                 getResources().getInteger(R.integer.websocket_broadcast_msg_content_control_ws_connect));
-                        intent.putExtra(getString(R.string.websocket_broadcast_msg_content_userid_header), jsonObject.getInt(getString(R.string.qrcode_msg_userid_header)));
+                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_userid_header), jsonObject.getInt(getString(R.string.qrcode_msg_userid_header)));
                         userID = jsonObject.getInt(getString(R.string.qrcode_msg_userid_header));
                         intent.putExtra(getString(R.string.websocket_broadcast_msg_content_addr_header), jsonObject.getString(getString(R.string.qrcode_msg_server_addr_header)));
                         sendBroadcast(intent);
